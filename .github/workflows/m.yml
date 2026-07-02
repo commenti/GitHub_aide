@@ -1,35 +1,79 @@
-name: Android CI Build
+name: Android CI Build (Phase 1 - UI/FileManager/AdMob)
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:   # manual "Run workflow" button bhi milega
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4  # <-- Updated to v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4 # <-- Updated to v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: gradle
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug --stacktrace
+      - name: Install required SDK platform & build-tools
+        run: |
+          yes | sdkmanager "platforms;android-35" "build-tools;35.0.0" --sdk_root=${ANDROID_HOME} || true
 
-    - name: Upload APK Artifact
-      uses: actions/upload-artifact@v4 # <-- Updated to v4
-      with:
-        name: Adobs-IDE-Debug-APK
-        path: app/build/outputs/apk/debug/app-debug.apk
+      # ---- Gradle wrapper missing hai project me, isliye generate karenge ----
+      - name: Setup Gradle (for wrapper generation)
+        uses: gradle/actions/setup-gradle@v4
 
+      - name: Generate gradlew if missing
+        run: |
+          if [ ! -f "./gradlew" ]; then
+            echo "gradlew nahi mila -> generate kar rahe hain..."
+            gradle wrapper --gradle-version 8.7
+          else
+            echo "gradlew already maujood hai, skip."
+          fi
+          chmod +x ./gradlew
+
+      - name: Build Debug APK
+        id: build
+        run: |
+          set +e
+          ./gradlew assembleDebug --stacktrace --info > build_output.log 2>&1
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+          set -e
+
+      # ---- Sirf real error wala portion nikaal ke saaf-saaf print karega ----
+      - name: Show clean error report (only if build failed)
+        if: steps.build.outputs.exit_code != '0'
+        run: |
+          echo "================ BUILD FAILED - ERROR SUMMARY ================"
+          grep -n -A 40 "FAILURE:" build_output.log || tail -n 100 build_output.log
+          echo "================================================================"
+          echo ""
+          echo "Full log neeche 'Upload full build log' artifact me milega."
+          exit 1
+
+      - name: Upload full build log (always, debugging ke liye)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-build-log
+          path: build_output.log
+          retention-days: 5
+
+      - name: Upload APK Artifact (sirf success par)
+        if: steps.build.outputs.exit_code == '0'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Adobs-IDE-Debug-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 14
