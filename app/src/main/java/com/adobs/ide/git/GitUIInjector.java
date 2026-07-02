@@ -15,6 +15,8 @@ import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.util.Log;
+import com.adobs.ide.git.GitOperations.GitException;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
@@ -373,7 +375,7 @@ public final class GitUIInjector {
 
         Context context = anchorView.getContext();
         EditText input = new EditText(context);
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_SUBJECT);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
         input.setText(DEFAULT_COMMIT_MSG);
         input.selectAll(); // Select all so user can easily overwrite
 

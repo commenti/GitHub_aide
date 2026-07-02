@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.adobs.ide">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- 1. Internet & Network Permissions (For AdMob & Git Push) -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,19 +17,9 @@
     <!-- Application Block: Optimized for modern Android & C++ -->
     <application
         android:allowBackup="false"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
         android:label="Adobs IDE"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AdobsIDE"
-        
-        <!-- Crucial for Android 10 File Management -->
-        android:requestLegacyExternalStorage="true" 
-        
-        <!-- Crucial for Phase 3 (C++ Security Boss Layer) -->
-        android:extractNativeLibs="true">
+        android:requestLegacyExternalStorage="true">
 
         <!-- AdMob Test Application ID (Prevents App Crash on initialization) -->
         <meta-data

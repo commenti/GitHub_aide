@@ -315,14 +315,14 @@ public class GitObserver {
      */
     private GitUiState determineGitUiState(String path) throws Exception {
         // Step 1: Is this a Git repository?
-        boolean isGitRepo = GitOperations.isGitRepo(path);
+        boolean isGitRepo = GitOperations.getInstance().isGitRepo(path);
         if (!isGitRepo) {
             Log.d(TAG, "Not a Git repository: " + path);
             return GitUiState.NONE;
         }
 
         // Step 2: Is there a valid auth token?
-        boolean hasValidToken = GitOperations.hasValidToken();
+        boolean hasValidToken = GitOperations.getInstance().hasValidToken();
         if (!hasValidToken) {
             Log.d(TAG, "No valid auth token");
             // Show error only once per path to avoid spam
@@ -339,7 +339,7 @@ public class GitObserver {
         }
 
         // Step 3: Are there uncommitted changes?
-        boolean hasUncommittedChanges = GitOperations.hasUncommittedChanges(path);
+        boolean hasUncommittedChanges = GitOperations.getInstance().hasUncommittedChanges(path);
         
         if (hasUncommittedChanges) {
             Log.d(TAG, "Detected uncommitted changes");
@@ -545,7 +545,7 @@ public class GitObserver {
             
             // Fallback: direct static call to MainActivity
             // Safe because we only read, never write
-            return MainActivity.getCurrentDirectoryPath();
+            return com.adobs.ide.ui.MainActivity.getCurrentDirectoryPath();
             
         } catch (Exception e) {
             Log.w(TAG, "Could not get current directory path", e);

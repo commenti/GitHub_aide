@@ -527,15 +527,14 @@ public final class GitOperations {
             
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 // Android 11+ — use newer MasterKey.Builder
-                masterKey = new MasterKey.Builder(appContext)
+                masterKey = new MasterKey.Builder(appContext, KEYSTORE_ALIAS)
                     .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-                    .setKeyAlias(KEYSTORE_ALIAS)
                     .build();
             } else {
                 // Android 10 — use KeyGenParameterSpec directly
                 KeyGenParameterSpec spec = new KeyGenParameterSpec.Builder(
                     KEYSTORE_ALIAS,
-                    KeyProperties.PURPOSE_ENCRYPTION | KeyProperties.PURPOSE_DECRYPTION
+                    KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT
                 )
                 .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)

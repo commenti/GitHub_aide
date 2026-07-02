@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.adobs.ide.app-merged_res-41:/layout_item_file.xml.flat",
+        "source": "com.adobs.ide.app-main-43:/layout/item_file.xml"
+    },
+    {
+        "merged": "com.adobs.ide.app-merged_res-41:/layout_activity_main.xml.flat",
+        "source": "com.adobs.ide.app-main-43:/layout/activity_main.xml"
+    }
+]

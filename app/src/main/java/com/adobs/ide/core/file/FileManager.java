@@ -360,5 +360,8 @@ public class FileManager {
 
     /** Back-stack of previously visited directories. */
     private final Deque<File> backStack = new ArrayDeque<>();
-
-   
+    
+    public FileManager(Context appContext) {
+        this.appContext = appContext;
+    }
+}

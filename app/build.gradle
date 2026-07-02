@@ -37,4 +37,7 @@ dependencies {
 
     // 3. Phase 2: Eclipse JGit (For GitHub Push/Commit Logic later)
     implementation 'org.eclipse.jgit:org.eclipse.jgit:6.8.0.202311291450-r'
+    
+    // 4. Security Crypto for EncryptedSharedPreferences
+    implementation 'androidx.security:security-crypto:1.1.0-alpha06'
 }
