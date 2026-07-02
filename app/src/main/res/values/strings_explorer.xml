@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Merge these into your main strings.xml -->
+    <string name="app_name">Adobs IDE</string>
+    <string name="create_new">Create New</string>
+    <string name="empty_folder_message">This folder is empty</string>
+    <string name="item_options">Item options</string>
+    <string name="ad_opt_in_title">Watch an ad to unlock this action?</string>
+    <string name="ad_opt_in_message">This action requires watching a short rewarded ad before it can be performed.</string>
+    <string name="cancel">Cancel</string>
+    <string name="watch_ad_yes">Yes</string>
+    <string name="new_file">New File</string>
+    <string name="new_folder">New Folder</string>
+    <string name="rename">Rename</string>
+    <string name="delete">Delete</string>
+    <string name="extract">Extract</string>
+    <string name="ok">OK</string>
+    <!-- Official Google TEST banner ad unit ID -->
+    <string name="admob_banner_test_id" translatable="false">ca-app-pub-3940256099942544/9214589741</string>
+</resources>

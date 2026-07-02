@@ -2,36 +2,48 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- 1. Internet & Network Permissions (For AdMob & Git Push) -->
+    <!-- Required for browsing/creating/deleting files on device storage -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+
+    <!-- Required by AdMob -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
-    <!-- 2. Storage Permissions for Android 10 (API 29) and below -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
-
-    <!-- 3. All Files Access Permission for Android 11 (API 30) to Android 15+ -->
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" 
-        tools:ignore="ScopedStorage" />
-
-    <!-- Application Block: Optimized for modern Android & C++ -->
     <application
+<<<<<<< HEAD
         android:allowBackup="false"
         android:label="Adobs IDE"
         android:supportsRtl="true"
         android:requestLegacyExternalStorage="true">
+=======
+        android:name=".IdeApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
+        android:requestLegacyExternalStorage="true"
+        tools:targetApi="33">
+>>>>>>> f1666cd (Add app/src/main resources and updates)
 
-        <!-- AdMob Test Application ID (Prevents App Crash on initialization) -->
+        <!-- Required AdMob App ID meta-data (TEST App ID) -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="@string/admob_app_id" />
 
-        <!-- MainActivity (Entry Point) -->
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".presentation.explorer.ExplorerActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            android:label="@string/app_name"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -39,4 +51,5 @@
         </activity>
 
     </application>
+
 </manifest>
