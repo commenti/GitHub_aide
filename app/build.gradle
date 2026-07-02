@@ -1,0 +1,40 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.adobs.ide'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.adobs.ide"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    // 1. Android UI & Core
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // 2. Phase 1: AdMob Dependency (For Alternating Ads Logic)
+    implementation 'com.google.android.gms:play-services-ads:23.0.0'
+
+    // 3. Phase 2: Eclipse JGit (For GitHub Push/Commit Logic later)
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:6.8.0.202311291450-r'
+}
