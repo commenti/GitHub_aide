@@ -1,0 +1,21 @@
+cat > .gitignore << 'EOF'
+.gradle/
+**/build/
+local.properties
+.idea/
+.vscode/
+*.iml
+*.log
+.DS_Store
+Thumbs.db
+.cxx/
+.externalNativeBuild/
+*.tmp
+*.temp
+*.jks
+*.keystore
+
+# Keep APKs outside build/
+!release/
+!release/*.apk
+EOF
