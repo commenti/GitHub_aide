@@ -19,13 +19,13 @@
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
-    android:name=".IdeApplication"
-    android:allowBackup="true"
-    android:label="@string/app_name"
-    android:supportsRtl="true"
-    android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
-    android:requestLegacyExternalStorage="true"
-    tools:targetApi="33">
+        android:name=".IdeApplication"
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
+        android:enableOnBackInvokedCallback="true"
+        tools:targetApi="33">
 
         <!-- Required AdMob App ID meta-data (TEST App ID) -->
         <meta-data

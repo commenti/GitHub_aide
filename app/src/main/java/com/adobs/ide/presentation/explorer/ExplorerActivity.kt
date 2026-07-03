@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -50,6 +51,7 @@ class ExplorerActivity : AppCompatActivity() {
         setupRecyclerView()
         setupFab()
         observeViewModel()
+        setupBackNavigation()
 
         val rootPath = getExternalFilesDir(null)?.absolutePath
             ?: Environment.getExternalStorageDirectory().absolutePath
@@ -249,17 +251,30 @@ class ExplorerActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    /** Navigates up to the parent directory, if any, instead of closing the Activity. */
-    override fun onBackPressed() {
-        val currentPath = viewModel.uiState.value.currentPath
-        val parent = File(currentPath).parentFile
-        val rootPath = getExternalFilesDir(null)?.absolutePath
-            ?: Environment.getExternalStorageDirectory().absolutePath
+    /**
+     * Registers an [OnBackPressedCallback] to navigate up to the parent directory
+     * instead of closing the Activity. Uses the AndroidX back-press dispatcher,
+     * which is the correct API for Android 13+ (API 33) and higher.
+     */
+    private fun setupBackNavigation() {
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    val currentPath = viewModel.uiState.value.currentPath
+                    val parent = File(currentPath).parentFile
+                    val rootPath = getExternalFilesDir(null)?.absolutePath
+                        ?: Environment.getExternalStorageDirectory().absolutePath
 
-        if (parent != null && currentPath != rootPath) {
-            viewModel.loadDirectory(parent.absolutePath)
-        } else {
-            super.onBackPressed()
-        }
+                    if (parent != null && currentPath != rootPath) {
+                        viewModel.loadDirectory(parent.absolutePath)
+                    } else {
+                        // Disable this callback so the system back stack handles it
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                    }
+                }
+            }
+        )
     }
 }
