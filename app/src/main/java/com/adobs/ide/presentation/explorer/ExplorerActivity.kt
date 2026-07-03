@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -25,7 +26,7 @@ import javax.inject.Inject
 class ExplorerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityExplorerBinding
-    private val viewModel: ExplorerViewModel by androidx.activity.viewModels()
+    private val viewModel: ExplorerViewModel by viewModels()
 
     @Inject
     lateinit var adManager: IAdManager

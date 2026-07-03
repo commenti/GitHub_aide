@@ -8,6 +8,7 @@ plugins {
 android {
     namespace = "com.adobs.ide"
     compileSdk = 35
+    ndkVersion = "25.1.8937393"
 
     defaultConfig {
         applicationId = "com.adobs.ide"
@@ -27,13 +28,6 @@ android {
                 cppFlags += "-std=c++17"
                 arguments += "-DANDROID_STL=c++_shared"
             }
-        }
-    }
-
-    externalNativeBuild {
-        cmake {
-            path = file("src/main/cpp/CMakeLists.txt")
-            version = "3.22.1"
         }
     }
 
@@ -103,8 +97,9 @@ dependencies {
     // Git engine (for future Phase 2)
     implementation("org.eclipse.jgit:org.eclipse.jgit:6.10.0.202406032230-r")
 
-    // Zip extraction
+    // Zip extraction + IOUtils
     implementation("org.apache.commons:commons-compress:1.27.1")
+    implementation("commons-io:commons-io:2.16.1")
 
     // Testing
     testImplementation("junit:junit:4.13.2")
